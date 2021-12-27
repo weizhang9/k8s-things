@@ -321,3 +321,6 @@ https://www.brendangregg.com/usemethod.html for infra level
 https://thenewstack.io/monitoring-microservices-red-method/ for app level
 
 
+## Eviction
+https://kubernetes.io/docs/concepts/scheduling-eviction/
+https://devtron.ai/blog/ultimate-guide-of-pod-eviction-on-kubernetes/
