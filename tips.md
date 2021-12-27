@@ -230,10 +230,59 @@ kubectl apply -f ${deployment-config-file} # pod scale remains
 ```
 
 ## Kubernetes Deployment
-https://www.reddit.com/r/kubernetes/comments/larfrm/stateful_set_vs_replicaset_vs_deployment/
-https://kubernetes.io/docs/concepts/workloads/controllers/job/ run a task once/periodically
-https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/ runs in previledged mode, good for network debugging
-https://v1-19.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-update-deployment
+
+#### StatefulSet vs ReplicaSet vs Deployment vs Service vs DaemonSet vs Job vs Rolling Deployment
+Deployment and StatefulSet are abstraction of k8s workload management, which should be used during deployment instead of deploying specific implementation like pods or replicasets.
+
+[Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) creates [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) from manifest. Replicaset then maintains a set of identical pods.
+
+[StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/) is similar to Deployment, except that it manages a replicaset of pods that are stateful, i.e. not interchangeable, the identity matters. But it has [limitations](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations).
+
+[Service](https://kubernetes.io/docs/concepts/services-networking/service/) is used to give pods network access. Each pod has its own IP but a set of pods has the same DNS name. Service is an abstraction layer to expose the app running on pods.
+
+A [DaemonSet](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) ensure there is a copy of a pod running on all/some of the nodes. Good for log collection, monitoring all the nodes, cluster storage, etc.
+https://medium.com/stakater/k8s-deployments-vs-statefulsets-vs-daemonsets-60582f0c62d4
+
+A [Job](https://kubernetes.io/docs/concepts/workloads/controllers/job/) is a task runs only once, and [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) runs a task periodically, differentiate from deployment which is running incessantly.
+
+Kubernetes supports [rolling updates](https://v1-19.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-update-deployment). The Deployment updates Pods in a rolling update fashion when `.spec.strategy.type==RollingUpdate`. You can specify `maxUnavailable` and `maxSurge` to [proportionally control](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#proportional-scaling) the rolling update process. [Pausing/Resuming a deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#pausing-and-resuming-a-deployment) `kubetctl rollout pause/resume deployment/${deployment-name}` is supported too.
+
+#### rolling deployment commands
+```
+# check rollout status
+kubectl rollout status deployment/${deployment-name}
+# check the creation and exit of replicaset
+kubectl get rs
+# check pods status
+kubectl get pods
+# check if deployment running as expected
+kubectl get deployment ${deployment-name}
+# check description of current deployment
+kubectl describe deployment ${deployment-name}
+
+# check the rollout history of a deployment
+kubectl rollout history deployment/${deployment-name}
+# check the details of a rollout revision
+kubectl rollout history deployment/${deployment-name} --revision=${revision-number}
+# rollback to previous deployment
+kubectl rollout undo deployment/${deployment-name}
+# rollback to a specific revision
+kubectl rollout undo deployment/${deployment-name} --to-revision=${revision-number}
+
+# deployment status from command exit status
+kubectl rollout
+echo $? # 0 indicates success while 1 indicates error
+```
+
+#### deployment scale
+```
+# scale up/down a deployment
+kubectl scale deployment/${deployment-name} --replicas=${replica-amount}
+# horizontal pod autoscale: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+kubectl autoscale deployment/${deployment-name} --min=${min-amount-pods} --max=${max-amount-pods} --cpu-percent=${cpu-consumed-percentage, e.g. 80} 
+#check the current status of the newly-made HorizontalPodAutoscaler
+kubectl get hpa
+```
 
 
 ## kubernetes Logging
