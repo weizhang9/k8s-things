@@ -177,21 +177,21 @@ netstat -s | grep -i fragment # check fragment transmission failure
 ##### bonus - perfomance test with curl
 ```
 # curl-format.txt
- time_namelookup: %{time_namelookup}\n
-       time_connect: %{time_connect}\n
- time_appconnect: %{time_appconnect}\n
+   time_namelookup: %{time_namelookup}\n
+      time_connect: %{time_connect}\n
+   time_appconnect: %{time_appconnect}\n
   time_pretransfer: %{time_pretransfer}\n
-       time_redirect: %{time_redirect}\n
+     time_redirect: %{time_redirect}\n
 time_starttransfer: %{time_starttransfer}\n
-						----------------\n
-			time_total: %{time_total}\n
+			----------------\n
+		time_total: %{time_total}\n
 -------------------------------------------------------\n
-   size_download: %{size_download}\n
+     size_download: %{size_download}\n
        size_header: %{size_header}\n
       size_request: %{size_request}\n
        size_upload: %{size_upload}\n
-speed_download: %{speed_download}\n
-    speed_upload: %{speed_upload}\n
+    speed_download: %{speed_download}\n
+      speed_upload: %{speed_upload}\n
 ```
 usage:
 ```
@@ -326,7 +326,6 @@ kubectl autoscale deployment/${deployment-name} --min=${min-amount-pods} --max=$
 kubectl get hpa
 ```
 
-
 ## kubernetes Logging
 - [basic logging](https://kubernetes.io/docs/concepts/cluster-administration/logging/#basic-logging-in-kubernetes)
 -- pods send data to standard output streams
@@ -356,13 +355,13 @@ cd /var/log/pods
 ```
 
 ## Kubernetes Monitoring & Alerting
-https://github.com/prometheus-operator/kube-prometheus for `kubeadm`
-http://blog.itaysk.com/2019/01/15/Kubernetes-metrics-and-monitoring
-https://www.networkcomputing.com/cloud-infrastructure/kubernetes-monitoring-5-key-metrics
-https://www.brendangregg.com/usemethod.html for infra level
+https://github.com/prometheus-operator/kube-prometheus for `kubeadm`  
+http://blog.itaysk.com/2019/01/15/Kubernetes-metrics-and-monitoring  
+https://www.networkcomputing.com/cloud-infrastructure/kubernetes-monitoring-5-key-metrics  
+https://www.brendangregg.com/usemethod.html for infra level  
 https://thenewstack.io/monitoring-microservices-red-method/ for app level
 
 
 ## Eviction
-https://kubernetes.io/docs/concepts/scheduling-eviction/
+https://kubernetes.io/docs/concepts/scheduling-eviction/  
 https://devtron.ai/blog/ultimate-guide-of-pod-eviction-on-kubernetes/
