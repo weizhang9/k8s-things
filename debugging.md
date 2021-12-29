@@ -1,5 +1,47 @@
 # Kubernetes Debugging
 
+<!-- `make toc` to generate https://github.com/jonschlinkert/markdown-toc#cli -->
+
+<!-- toc -->
+
+- [Resource Management](#resource-management)
+    + [list node capacity](#list-node-capacity)
+    + [get pod spec](#get-pod-spec)
+    + [get resource requests and limits (for a pod if specified)](#get-resource-requests-and-limits-for-a-pod-if-specified)
+    + [check resource consumption for the nodes/pods](#check-resource-consumption-for-the-nodespods)
+- [Pod Security Policy](#pod-security-policy)
+    + [list (cluster) roles and associated resources](#list-cluster-roles-and-associated-resources)
+    + [find out which (cluster) roles are associated with the PSP](#find-out-which-cluster-roles-are-associated-with-the-psp)
+    + [list (cluster) role bindings for ServiceAccounts](#list-cluster-role-bindings-for-serviceaccounts)
+- [Kubernetes Network Model](#kubernetes-network-model)
+    + [check cluster network info](#check-cluster-network-info)
+    + [list the cidr range of nodes](#list-the-cidr-range-of-nodes)
+    + [log into a node](#log-into-a-node)
+    + [deploy network debugging tool](#deploy-network-debugging-tool)
+    + [debug pod unable to resolve network service](#debug-pod-unable-to-resolve-network-service)
+    + [slow performance](#slow-performance)
+      - [bonus - perfomance test with curl](#bonus---perfomance-test-with-curl)
+- [Multi-platform Kubernetes Clusters](#multi-platform-kubernetes-clusters)
+    + [get the taints associated with the nodes](#get-the-taints-associated-with-the-nodes)
+    + [display nodes labels](#display-nodes-labels)
+    + [check pod logs if describe pod isn't helpful](#check-pod-logs-if-describe-pod-isnt-helpful)
+- [Cluster Management](#cluster-management)
+    + [view deployment details](#view-deployment-details)
+    + [view resources details](#view-resources-details)
+    + [modify resources thru cli](#modify-resources-thru-cli)
+    + [problem with mixing imperative and declarative](#problem-with-mixing-imperative-and-declarative)
+- [Kubernetes Deployment](#kubernetes-deployment)
+    + [StatefulSet vs ReplicaSet vs Deployment vs Service vs DaemonSet vs Job vs Rolling Deployment](#statefulset-vs-replicaset-vs-deployment-vs-service-vs-daemonset-vs-job-vs-rolling-deployment)
+    + [rolling deployment commands](#rolling-deployment-commands)
+    + [deployment scale](#deployment-scale)
+- [kubernetes Logging](#kubernetes-logging)
+    + [kubectl logs flags](#kubectl-logs-flags)
+    + [check logs on the node](#check-logs-on-the-node)
+- [Kubernetes Monitoring & Alerting](#kubernetes-monitoring--alerting)
+- [Eviction](#eviction)
+
+<!-- tocstop -->
+
 ## [Resource Management](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container)
 Specify resource requirements via requests and limits in the Pod spec
 1. request: minimum quantity of the resource needed
