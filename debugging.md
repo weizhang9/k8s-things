@@ -364,4 +364,6 @@ https://thenewstack.io/monitoring-microservices-red-method/ for app level
 
 ## Eviction
 https://kubernetes.io/docs/concepts/scheduling-eviction/  
-https://devtron.ai/blog/ultimate-guide-of-pod-eviction-on-kubernetes/
+https://devtron.ai/blog/ultimate-guide-of-pod-eviction-on-kubernetes/  
+https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/  
+https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/memory-default-namespace/
